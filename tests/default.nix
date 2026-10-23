@@ -1,11 +1,15 @@
-lib:
-
 let
-  nix-utils = import ../. lib;
+  nixpkgs = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/nixpkgs-unstable.tar.gz";
+    sha256 = "0n88mfr09bfb9bcgq4yysyvw9vzy8kkh2iyxa1dgldd33qn0mzs3";
+  };
+
+  lib = import (nixpkgs + "/lib");
+  nixUtils = import ../. lib;
 in
 lib.runTests {
   testEachSystem = {
-    expr = nix-utils.eachSystem [ "a" "b" ] (system:
+    expr = nixUtils.eachSystem [ "a" "b" ] (system:
       {
         packages.default = "pkg-${system}";
         checks.test = "test-${system}";
@@ -24,7 +28,7 @@ lib.runTests {
   };
 
   testForAllDefaultLinuxSystems = {
-    expr = nix-utils.forAllDefaultLinuxSystems (system:
+    expr = nixUtils.forAllDefaultLinuxSystems (system:
       {
         default = "pkg-${system}";
       }
