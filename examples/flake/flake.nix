@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-utils = { url = ../.; flake = false; };
+    nix-utils = { url = ../../.; flake = false; };
   };
 
   outputs = { self, nixpkgs, nix-utils }:
@@ -12,17 +12,21 @@
     nixUtils.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-
-        hello = pkgs.writeShellApplication {
-          name = "hello";
-          runtimeInputs = [ pkgs.cowsay ];
-          text = builtins.readFile ./hello.sh;
-        };
+        hello = pkgs.callPackage ../hello.nix {};
       in
       {
         devShells.default = pkgs.mkShell {
-          name = "example";
+          name = "flake";
           packages = [ hello ];
+          shellHook = ''
+            echo "Default Linux systems = ${builtins.toString nixUtils.defaultLinuxSystems}"
+            echo "Default Mac systems = ${builtins.toString nixUtils.defaultMacSystems}"
+            echo "Default systems = ${builtins.toString nixUtils.defaultSystems}"
+
+            echo
+
+            hello
+          '';
         };
 
         packages = {
