@@ -1,10 +1,8 @@
-{ nixpkgs ? import ./nixpkgs.nix }:
+{ nixpkgs ? import ../../tests/nixpkgs.nix }:
 
 let
-  lib = nixpkgs.lib;
-  nixUtils = import ../.. lib;
-
   pkgs = import nixpkgs {};
+  nixUtils = import ../.. pkgs.lib;
   hello = pkgs.callPackage ../hello.nix {};
 in
 pkgs.mkShell {

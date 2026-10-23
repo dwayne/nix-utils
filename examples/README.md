@@ -12,7 +12,6 @@ The example script says "Hello, world!" using [cowsay](https://cowsay.diamonds/)
 
 ```bash
 nix develop ./examples/flake
-hello
 ```
 
 **Run**
