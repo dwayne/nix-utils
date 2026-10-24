@@ -1,13 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-utils = { url = ../../.; flake = false; };
+    nix-utils-src = { url = ../../.; flake = false; };
   };
 
-  outputs = { self, nixpkgs, nix-utils }:
+  outputs = { self, nixpkgs, nix-utils-src }:
     let
       lib = nixpkgs.lib;
-      nixUtils = import nix-utils lib;
+      nixUtils = import nix-utils-src lib;
     in
     nixUtils.eachDefaultSystem (system:
       let

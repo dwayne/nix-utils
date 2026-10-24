@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "nix-utils": {
+    "nix-utils-src": {
       "flake": false,
       "locked": {
         "path": "../..",
@@ -30,7 +30,7 @@
     },
     "root": {
       "inputs": {
-        "nix-utils": "nix-utils",
+        "nix-utils-src": "nix-utils-src",
         "nixpkgs": "nixpkgs"
       }
     }
